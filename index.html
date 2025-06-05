@@ -125,7 +125,78 @@
             background: #e8e9ea;
         }
 
-        .word-input-section {
+        .input-mode-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .input-mode-btn {
+            background: #f1f2f6;
+            border: 2px solid #ddd;
+            color: #2d3436;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .input-mode-btn.active {
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+            border-color: #00b894;
+        }
+
+        .input-mode-btn:hover:not(.active) {
+            background: #e8e9ea;
+        }
+
+        .bulk-input-section {
+            margin-bottom: 20px;
+        }
+
+        .bulk-input {
+            width: 100%;
+            min-height: 120px;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.3s;
+            margin-bottom: 10px;
+        }
+
+        .bulk-input:focus {
+            outline: none;
+            border-color: #ff6b6b;
+        }
+
+        .bulk-input-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .clear-btn {
+            background: linear-gradient(135deg, #636e72, #2d3436);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .clear-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(99, 110, 114, 0.3);
+        }
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
@@ -372,6 +443,10 @@
                 align-items: center;
             }
 
+            .input-mode-selector {
+                justify-content: center;
+            }
+
             .category-tabs {
                 justify-content: center;
             }
@@ -415,9 +490,29 @@
                     </div>
                 </div>
                 
-                <div class="word-input-section">
+                <!-- 単語追加方法の切り替え -->
+                <div class="input-mode-selector">
+                    <button class="input-mode-btn active" onclick="setInputMode('single')" id="singleModeBtn">
+                        ✏️ 個別入力
+                    </button>
+                    <button class="input-mode-btn" onclick="setInputMode('bulk')" id="bulkModeBtn">
+                        📝 まとめて入力
+                    </button>
+                </div>
+                
+                <!-- 個別入力モード -->
+                <div class="word-input-section" id="singleInputSection">
                     <input type="text" class="word-input" id="wordInput" placeholder="単語を入力してください">
                     <button class="add-btn" onclick="addWord()">追加</button>
+                </div>
+                
+                <!-- まとめて入力モード -->
+                <div class="bulk-input-section hidden" id="bulkInputSection">
+                    <textarea class="bulk-input" id="bulkInput" placeholder="複数の単語を入力してください（改行、カンマ、スペースで区切り）&#10;例：&#10;美しい&#10;強い, 賢い&#10;優しい 勇敢な"></textarea>
+                    <div class="bulk-input-controls">
+                        <button class="add-btn" onclick="addBulkWords()">まとめて追加</button>
+                        <button class="clear-btn" onclick="clearBulkInput()">クリア</button>
+                    </div>
                 </div>
                 
                 <div class="word-list" id="wordList">
@@ -457,6 +552,7 @@
     <script>
         let currentMode = 'mixed'; // 'mixed' or 'category'
         let activeCategory = 1; // 1 or 2 (for category mode)
+        let inputMode = 'single'; // 'single' or 'bulk'
         
         // ミックスモード用
         let mixedWords = [];
@@ -480,6 +576,113 @@
         
         updateWordList();
         updateGenerateButton();
+
+        function setInputMode(mode) {
+            inputMode = mode;
+            
+            // ボタンの状態を更新
+            document.getElementById('singleModeBtn').classList.remove('active');
+            document.getElementById('bulkModeBtn').classList.remove('active');
+            document.getElementById(mode + 'ModeBtn').classList.add('active');
+            
+            // 入力エリアの表示/非表示
+            const singleSection = document.getElementById('singleInputSection');
+            const bulkSection = document.getElementById('bulkInputSection');
+            
+            if (mode === 'single') {
+                singleSection.classList.remove('hidden');
+                bulkSection.classList.add('hidden');
+            } else {
+                singleSection.classList.add('hidden');
+                bulkSection.classList.remove('hidden');
+            }
+        }
+
+        function parseBulkInput(text) {
+            // 改行、カンマ、スペースで分割
+            return text
+                .split(/[\n,\s]+/)
+                .map(word => word.trim())
+                .filter(word => word.length > 0);
+        }
+
+        function addBulkWords() {
+            const input = document.getElementById('bulkInput');
+            const text = input.value.trim();
+            
+            if (!text) return;
+            
+            const words = parseBulkInput(text);
+            const currentWords = getCurrentWords();
+            let addedCount = 0;
+            
+            words.forEach(word => {
+                if (word && !currentWords.includes(word)) {
+                    currentWords.push(word);
+                    addedCount++;
+                }
+            });
+            
+            if (addedCount > 0) {
+                input.value = '';
+                updateWordList();
+                updateGenerateButton();
+                
+                // 追加結果を表示
+                showNotification(`${addedCount}個の単語を追加しました！`);
+            } else {
+                showNotification('追加できる新しい単語がありませんでした。', 'warning');
+            }
+        }
+
+        function clearBulkInput() {
+            document.getElementById('bulkInput').value = '';
+        }
+
+        function showNotification(message, type = 'success') {
+            // 通知を表示する関数
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#00b894' : '#fdcb6e'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                animation: slideInRight 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // 3秒後に自動削除
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // CSS アニメーションを動的に追加
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOutRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
 
         function setMode(mode) {
             currentMode = mode;
