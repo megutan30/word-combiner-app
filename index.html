@@ -278,6 +278,120 @@
             font-size: 12px;
         }
 
+        .list-controls {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 15px;
+        }
+
+        .bulk-select-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .bulk-select-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .bulk-select-btn.active {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+
+        .bulk-delete-section {
+            background: #ffe6e6;
+            border: 2px solid #ffcccc;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .bulk-delete-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .select-all-btn, .deselect-all-btn, .cancel-selection-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .select-all-btn:hover, .deselect-all-btn:hover, .cancel-selection-btn:hover {
+            background: #5a6268;
+            transform: translateY(-1px);
+        }
+
+        .delete-selected-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: bold;
+        }
+
+        .delete-selected-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #c0392b, #a93226);
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .delete-selected-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .word-tag.selectable {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .word-tag.selectable:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .word-tag.selected {
+            background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
+            transform: scale(0.95);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .word-tag .selection-indicator {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
         .generate-btn {
             background: linear-gradient(135deg, #00b894, #00a085);
             color: white;
@@ -592,6 +706,15 @@
             .category-tabs {
                 justify-content: center;
             }
+
+            .bulk-delete-controls {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .bulk-delete-controls button {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -659,6 +782,24 @@
                 
                 <div class="word-list" id="wordList">
                     <div class="empty-state">まだ単語が登録されていません</div>
+                </div>
+                
+                <!-- まとめて削除機能 -->
+                <div class="bulk-delete-section" id="bulkDeleteSection" style="display: none;">
+                    <div class="bulk-delete-controls">
+                        <button class="select-all-btn" onclick="selectAllWords()">全選択</button>
+                        <button class="deselect-all-btn" onclick="deselectAllWords()">選択解除</button>
+                        <button class="delete-selected-btn" onclick="deleteSelectedWords()" id="deleteSelectedBtn" disabled>
+                            選択した単語を削除 (<span id="selectedCount">0</span>個)
+                        </button>
+                        <button class="cancel-selection-btn" onclick="cancelSelection()">キャンセル</button>
+                    </div>
+                </div>
+                
+                <div class="list-controls">
+                    <button class="bulk-select-btn" onclick="toggleBulkSelectMode()" id="bulkSelectBtn">
+                        ✅ まとめて削除
+                    </button>
                 </div>
             </div>
             
@@ -732,6 +873,10 @@
         // 固定機能用
         let pinnedWord1 = false;
         let pinnedWord2 = false;
+        
+        // まとめて削除機能用
+        let bulkSelectMode = false;
+        let selectedWords = new Set();
 
         // 初期単語を追加（詳細なゲーム構成要素）
         const initialMixedWords = [
@@ -887,6 +1032,11 @@
             updateWordList();
             updateGenerateButton();
             updateExcludedWordsSection();
+            
+            // まとめて削除モードもリセット
+            if (bulkSelectMode) {
+                toggleBulkSelectMode();
+            }
             updateExcludedWordsSection();
             
             // 新しい組み合わせを自動生成
@@ -1089,6 +1239,11 @@
             pinnedWord2 = false;
             updatePinDisplay(1, false);
             updatePinDisplay(2, false);
+            
+            // まとめて削除モードもリセット
+            if (bulkSelectMode) {
+                toggleBulkSelectMode();
+            }
         }
 
         function setActiveCategory(category) {
@@ -1152,12 +1307,110 @@
                 categoryClass = activeCategory === 1 ? 'category1' : 'category2';
             }
             
-            wordList.innerHTML = currentWords.map(word => `
-                <div class="word-tag ${categoryClass}">
-                    ${word}
-                    <button class="remove-btn" onclick="removeWord('${word}')">×</button>
-                </div>
-            `).join('');
+            wordList.innerHTML = currentWords.map(word => {
+                const isSelected = selectedWords.has(word);
+                const selectableClass = bulkSelectMode ? 'selectable' : '';
+                const selectedClass = isSelected ? 'selected' : '';
+                const selectionIndicator = isSelected ? '<span class="selection-indicator">✓</span>' : '';
+                
+                if (bulkSelectMode) {
+                    return `
+                        <div class="word-tag ${categoryClass} ${selectableClass} ${selectedClass}" onclick="toggleWordSelection('${word}')">
+                            ${word}
+                            ${selectionIndicator}
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="word-tag ${categoryClass}">
+                            ${word}
+                            <button class="remove-btn" onclick="removeWord('${word}')">×</button>
+                        </div>
+                    `;
+                }
+            }).join('');
+        }
+
+        function toggleBulkSelectMode() {
+            bulkSelectMode = !bulkSelectMode;
+            const btn = document.getElementById('bulkSelectBtn');
+            const bulkDeleteSection = document.getElementById('bulkDeleteSection');
+            
+            if (bulkSelectMode) {
+                btn.textContent = '❌ 選択モード終了';
+                btn.classList.add('active');
+                bulkDeleteSection.style.display = 'block';
+            } else {
+                btn.textContent = '✅ まとめて削除';
+                btn.classList.remove('active');
+                bulkDeleteSection.style.display = 'none';
+                selectedWords.clear();
+            }
+            
+            updateWordList();
+            updateSelectedCount();
+        }
+
+        function toggleWordSelection(word) {
+            if (!bulkSelectMode) return;
+            
+            if (selectedWords.has(word)) {
+                selectedWords.delete(word);
+            } else {
+                selectedWords.add(word);
+            }
+            
+            updateWordList();
+            updateSelectedCount();
+        }
+
+        function selectAllWords() {
+            const currentWords = getCurrentWords();
+            selectedWords.clear();
+            currentWords.forEach(word => selectedWords.add(word));
+            updateWordList();
+            updateSelectedCount();
+        }
+
+        function deselectAllWords() {
+            selectedWords.clear();
+            updateWordList();
+            updateSelectedCount();
+        }
+
+        function updateSelectedCount() {
+            const countElement = document.getElementById('selectedCount');
+            const deleteBtn = document.getElementById('deleteSelectedBtn');
+            
+            countElement.textContent = selectedWords.size;
+            deleteBtn.disabled = selectedWords.size === 0;
+        }
+
+        function deleteSelectedWords() {
+            if (selectedWords.size === 0) return;
+            
+            const count = selectedWords.size;
+            const currentWords = getCurrentWords();
+            
+            // 選択された単語を削除
+            selectedWords.forEach(word => {
+                const index = currentWords.indexOf(word);
+                if (index > -1) {
+                    currentWords.splice(index, 1);
+                }
+            });
+            
+            selectedWords.clear();
+            updateWordList();
+            updateGenerateButton();
+            updateExcludedWordsSection();
+            updateSelectedCount();
+            
+            showNotification(`${count}個の単語を削除しました`, 'warning');
+        }
+
+        function cancelSelection() {
+            toggleBulkSelectMode();
         }
 
         function updateGenerateButton() {
