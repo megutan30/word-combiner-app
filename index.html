@@ -372,6 +372,57 @@
             color: #666;
         }
 
+        .pin-btn {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: rgba(255, 193, 7, 0.8);
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+        }
+
+        .pin-btn:hover {
+            background: rgba(255, 193, 7, 1);
+            opacity: 1;
+            transform: scale(1.1);
+            box-shadow: 0 3px 10px rgba(255, 193, 7, 0.4);
+        }
+
+        .pin-btn.pinned {
+            background: rgba(255, 193, 7, 1);
+            opacity: 1;
+            transform: rotate(45deg);
+            box-shadow: 0 3px 10px rgba(255, 193, 7, 0.6);
+        }
+
+        .pin-btn:active {
+            transform: scale(0.95);
+        }
+
+        .pin-btn.pinned:active {
+            transform: rotate(45deg) scale(0.95);
+        }
+
+        .word-box.pinned {
+            border-color: #ffc107;
+            background: linear-gradient(135deg, #fff9e6, #fff3cd);
+            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+        }
+
+        .word-box.pinned .hint {
+            color: #856404;
+            font-weight: bold;
+        }
+
         .dislike-btn {
             position: absolute;
             bottom: 5px;
@@ -623,6 +674,9 @@
                             <div class="category-label" id="label1">ボックス1</div>
                             <div class="word-text" id="word1">単語1</div>
                             <div class="hint">クリックして変更</div>
+                            <button class="pin-btn" onclick="event.stopPropagation(); togglePin(1)" title="この単語を固定/解除" id="pinBtn1">
+                                📌
+                            </button>
                             <button class="dislike-btn" onclick="event.stopPropagation(); dislikeWord(1)" title="この単語を除外">
                                 👎
                             </button>
@@ -631,6 +685,9 @@
                             <div class="category-label" id="label2">ボックス2</div>
                             <div class="word-text" id="word2">単語2</div>
                             <div class="hint">クリックして変更</div>
+                            <button class="pin-btn" onclick="event.stopPropagation(); togglePin(2)" title="この単語を固定/解除" id="pinBtn2">
+                                📌
+                            </button>
                             <button class="dislike-btn" onclick="event.stopPropagation(); dislikeWord(2)" title="この単語を除外">
                                 👎
                             </button>
@@ -671,6 +728,10 @@
         let currentWord1 = '';
         let currentWord2 = '';
         let selectedBox = 0;
+        
+        // 固定機能用
+        let pinnedWord1 = false;
+        let pinnedWord2 = false;
 
         // 初期単語を追加（詳細なゲーム構成要素）
         const initialMixedWords = [
@@ -765,6 +826,39 @@
         updateWordList();
         updateGenerateButton();
         updateExcludedWordsSection();
+
+        function togglePin(boxNumber) {
+            if (boxNumber === 1) {
+                pinnedWord1 = !pinnedWord1;
+                updatePinDisplay(1, pinnedWord1);
+            } else {
+                pinnedWord2 = !pinnedWord2;
+                updatePinDisplay(2, pinnedWord2);
+            }
+            
+            const word = boxNumber === 1 ? currentWord1 : currentWord2;
+            const isPinned = boxNumber === 1 ? pinnedWord1 : pinnedWord2;
+            
+            showNotification(
+                `「${word}」を${isPinned ? '固定' : '固定解除'}しました`,
+                isPinned ? 'success' : 'warning'
+            );
+        }
+
+        function updatePinDisplay(boxNumber, isPinned) {
+            const box = document.getElementById(`wordBox${boxNumber}`);
+            const btn = document.getElementById(`pinBtn${boxNumber}`);
+            
+            if (isPinned) {
+                box.classList.add('pinned');
+                btn.classList.add('pinned');
+                btn.title = 'この単語の固定を解除';
+            } else {
+                box.classList.remove('pinned');
+                btn.classList.remove('pinned');
+                btn.title = 'この単語を固定';
+            }
+        }
 
         function dislikeWord(boxNumber) {
             const wordToExclude = boxNumber === 1 ? currentWord1 : currentWord2;
@@ -989,6 +1083,12 @@
             // 結果をリセット
             document.getElementById('resultSection').style.display = 'none';
             document.getElementById('replacementPanel').style.display = 'none';
+            
+            // 固定状態もリセット
+            pinnedWord1 = false;
+            pinnedWord2 = false;
+            updatePinDisplay(1, false);
+            updatePinDisplay(2, false);
         }
 
         function setActiveCategory(category) {
@@ -1073,13 +1173,29 @@
         function generateRandomPair() {
             if (currentMode === 'mixed') {
                 if (mixedWords.length < 2) return;
-                const shuffled = [...mixedWords].sort(() => Math.random() - 0.5);
-                currentWord1 = shuffled[0];
-                currentWord2 = shuffled[1];
+                
+                // 固定されていない場合のみ新しい単語を選択
+                if (!pinnedWord1) {
+                    const availableWords = mixedWords.filter(word => word !== currentWord2);
+                    currentWord1 = availableWords[Math.floor(Math.random() * availableWords.length)];
+                }
+                
+                if (!pinnedWord2) {
+                    const availableWords = mixedWords.filter(word => word !== currentWord1);
+                    currentWord2 = availableWords[Math.floor(Math.random() * availableWords.length)];
+                }
+                
             } else {
                 if (category1Words.length === 0 || category2Words.length === 0) return;
-                currentWord1 = category1Words[Math.floor(Math.random() * category1Words.length)];
-                currentWord2 = category2Words[Math.floor(Math.random() * category2Words.length)];
+                
+                // カテゴリモードでも固定機能を適用
+                if (!pinnedWord1) {
+                    currentWord1 = category1Words[Math.floor(Math.random() * category1Words.length)];
+                }
+                
+                if (!pinnedWord2) {
+                    currentWord2 = category2Words[Math.floor(Math.random() * category2Words.length)];
+                }
             }
             
             document.getElementById('word1').textContent = currentWord1;
@@ -1091,6 +1207,10 @@
             document.getElementById('wordBox1').classList.remove('active');
             document.getElementById('wordBox2').classList.remove('active');
             selectedBox = 0;
+            
+            // 固定状態を維持
+            updatePinDisplay(1, pinnedWord1);
+            updatePinDisplay(2, pinnedWord2);
         }
 
         function selectBox(boxNumber) {
@@ -1136,9 +1256,19 @@
             if (selectedBox === 1) {
                 currentWord1 = newWord;
                 document.getElementById('word1').textContent = newWord;
+                // 手動で変更した場合は固定を解除
+                if (pinnedWord1) {
+                    pinnedWord1 = false;
+                    updatePinDisplay(1, false);
+                }
             } else if (selectedBox === 2) {
                 currentWord2 = newWord;
                 document.getElementById('word2').textContent = newWord;
+                // 手動で変更した場合は固定を解除
+                if (pinnedWord2) {
+                    pinnedWord2 = false;
+                    updatePinDisplay(2, false);
+                }
             }
             
             // パネルを隠す
