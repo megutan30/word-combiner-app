@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
@@ -85,6 +85,54 @@
             transform: translateY(-1px);
         }
 
+        .box-count-selector {
+            background: linear-gradient(135deg, #fdcb6e, #f39c12);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .box-count-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .box-count-btn {
+            background: white;
+            border: 2px solid #f39c12;
+            color: #2d3436;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            min-width: 50px;
+        }
+
+        .box-count-btn:hover {
+            background: #f39c12;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .box-count-display {
+            background: white;
+            border: 3px solid #f39c12;
+            color: #2d3436;
+            padding: 12px 24px;
+            border-radius: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            min-width: 80px;
+            text-align: center;
+        }
+
         .section {
             margin-bottom: 40px;
         }
@@ -102,17 +150,21 @@
             gap: 10px;
             margin-bottom: 20px;
             flex-wrap: wrap;
+            max-height: 200px;
+            overflow-y: auto;
         }
 
         .category-tab {
             background: #f1f2f6;
             border: 2px solid #ddd;
             color: #2d3436;
-            padding: 10px 20px;
+            padding: 10px 15px;
             border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s;
             font-weight: bold;
+            font-size: 14px;
+            white-space: nowrap;
         }
 
         .category-tab.active {
@@ -197,6 +249,8 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 16px rgba(99, 110, 114, 0.3);
         }
+
+        .word-input-section {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
@@ -256,13 +310,16 @@
             animation: fadeIn 0.3s;
         }
 
-        .word-tag.category1 {
-            background: linear-gradient(135deg, #ff7675, #e17055);
-        }
-
-        .word-tag.category2 {
-            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
-        }
+        .word-tag.box1 { background: linear-gradient(135deg, #ff7675, #e17055); }
+        .word-tag.box2 { background: linear-gradient(135deg, #6c5ce7, #a29bfe); }
+        .word-tag.box3 { background: linear-gradient(135deg, #00b894, #00a085); }
+        .word-tag.box4 { background: linear-gradient(135deg, #fdcb6e, #f39c12); }
+        .word-tag.box5 { background: linear-gradient(135deg, #e84393, #d63031); }
+        .word-tag.box6 { background: linear-gradient(135deg, #fd79a8, #e84393); }
+        .word-tag.box7 { background: linear-gradient(135deg, #74b9ff, #0984e3); }
+        .word-tag.box8 { background: linear-gradient(135deg, #a29bfe, #6c5ce7); }
+        .word-tag.box9 { background: linear-gradient(135deg, #55a3ff, #3742fa); }
+        .word-tag.box10 { background: linear-gradient(135deg, #26de81, #20bf6b); }
 
         .word-tag .remove-btn {
             background: rgba(255, 255, 255, 0.3);
@@ -281,7 +338,24 @@
         .list-controls {
             display: flex;
             justify-content: flex-end;
+            gap: 10px;
             margin-top: 15px;
+        }
+
+        .preset-btn {
+            background: linear-gradient(135deg, #8e44ad, #7d3c98);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .preset-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(142, 68, 173, 0.3);
         }
 
         .bulk-select-btn {
@@ -392,6 +466,371 @@
             font-weight: bold;
         }
 
+        .preset-panel {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 2px solid #8e44ad;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(142, 68, 173, 0.1);
+        }
+
+        .preset-panel h4 {
+            color: #8e44ad;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        .preset-panel h5 {
+            color: #6c757d;
+            margin: 15px 0 10px 0;
+            font-size: 1em;
+        }
+
+        .preset-save-section, .preset-load-section {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #dee2e6;
+        }
+
+        .preset-save-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .preset-save-controls input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .preset-save-controls input:focus {
+            outline: none;
+            border-color: #8e44ad;
+        }
+
+        .save-preset-btn {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .save-preset-btn:hover {
+            background: linear-gradient(135deg, #20c997, #17a2b8);
+            transform: translateY(-1px);
+        }
+
+        .current-preset-info {
+            font-size: 0.9em;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .preset-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .no-presets {
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+            padding: 20px;
+        }
+
+        .preset-item {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+
+        .preset-item:hover {
+            background: #e9ecef;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .preset-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .preset-name {
+            font-weight: bold;
+            color: #495057;
+            font-size: 1.1em;
+        }
+
+        .preset-info {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+
+        .preset-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .load-preset-btn {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .load-preset-btn:hover {
+            background: linear-gradient(135deg, #0056b3, #004085);
+            transform: translateY(-1px);
+        }
+
+        .delete-preset-btn {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .delete-preset-btn:hover {
+            background: linear-gradient(135deg, #c82333, #bd2130);
+            transform: translateY(-1px);
+        }
+
+        .preset-panel-controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .close-preset-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-preset-btn:hover {
+            background: #5a6268;
+            transform: translateY(-1px);
+        }
+
+        .backup-section {
+            background: #f0f8ff;
+            border: 1px solid #0066cc;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .backup-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .backup-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: rgba(0, 102, 204, 0.1);
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+
+        .auto-backup-status {
+            color: #0066cc;
+            font-weight: bold;
+        }
+
+        .backup-count {
+            color: #666;
+        }
+
+        .backup-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .manual-backup-btn, .export-backup-btn, .import-backup-btn, .restore-backup-btn {
+            background: linear-gradient(135deg, #0066cc, #004499);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            flex: 1;
+            min-width: 100px;
+        }
+
+        .manual-backup-btn:hover, .export-backup-btn:hover, .import-backup-btn:hover, .restore-backup-btn:hover {
+            background: linear-gradient(135deg, #004499, #003366);
+            transform: translateY(-1px);
+        }
+
+        .backup-list-panel {
+            background: linear-gradient(135deg, #f0f8ff, #e6f3ff);
+            border: 2px solid #0066cc;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(0, 102, 204, 0.1);
+        }
+
+        .backup-list-panel h4 {
+            color: #0066cc;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        .backup-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .no-backups {
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+            padding: 20px;
+        }
+
+        .backup-item {
+            background: white;
+            border: 1px solid #0066cc;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+
+        .backup-item:hover {
+            background: #f0f8ff;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(0, 102, 204, 0.2);
+        }
+
+        .backup-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .backup-name {
+            font-weight: bold;
+            color: #0066cc;
+            font-size: 1.1em;
+        }
+
+        .backup-type {
+            background: #0066cc;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+
+        .backup-info-detail {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+
+        .backup-actions-detail {
+            display: flex;
+            gap: 8px;
+        }
+
+        .restore-btn {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .restore-btn:hover {
+            background: linear-gradient(135deg, #20c997, #17a2b8);
+            transform: translateY(-1px);
+        }
+
+        .delete-backup-btn {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .delete-backup-btn:hover {
+            background: linear-gradient(135deg, #c82333, #bd2130);
+            transform: translateY(-1px);
+        }
+
+        .backup-panel-controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .close-backup-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-backup-btn:hover {
+            background: #5a6268;
+            transform: translateY(-1px);
+        }
+
         .generate-btn {
             background: linear-gradient(135deg, #00b894, #00a085);
             color: white;
@@ -426,36 +865,56 @@
         }
 
         .word-boxes {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
             margin-top: 20px;
-            flex-wrap: wrap;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (max-width: 768px) {
+            .word-boxes {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .word-boxes {
+                grid-template-columns: 1fr;
+            }
         }
 
         .word-box {
             background: white;
-            border: 3px solid #ff6b6b;
+            border: 3px solid;
             border-radius: 15px;
             padding: 20px;
-            min-width: 150px;
             cursor: pointer;
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-        .word-box.box1 {
-            border-color: #ff7675;
-        }
-
-        .word-box.box2 {
-            border-color: #6c5ce7;
-        }
+        .word-box.box1 { border-color: #ff7675; }
+        .word-box.box2 { border-color: #6c5ce7; }
+        .word-box.box3 { border-color: #00b894; }
+        .word-box.box4 { border-color: #fdcb6e; }
+        .word-box.box5 { border-color: #e84393; }
+        .word-box.box6 { border-color: #fd79a8; }
+        .word-box.box7 { border-color: #74b9ff; }
+        .word-box.box8 { border-color: #a29bfe; }
+        .word-box.box9 { border-color: #55a3ff; }
+        .word-box.box10 { border-color: #26de81; }
 
         .word-box:hover {
             transform: scale(1.05);
-            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
         .word-box.active {
@@ -464,14 +923,15 @@
         }
 
         .word-box .word-text {
-            font-size: 1.5em;
+            font-size: 1.3em;
             font-weight: bold;
             color: #333;
             margin-bottom: 5px;
+            word-break: break-word;
         }
 
         .word-box .hint {
-            font-size: 0.9em;
+            font-size: 0.8em;
             color: #666;
         }
 
@@ -482,7 +942,7 @@
             background: rgba(0, 0, 0, 0.1);
             padding: 2px 8px;
             border-radius: 10px;
-            font-size: 0.8em;
+            font-size: 0.7em;
             color: #666;
         }
 
@@ -493,9 +953,9 @@
             background: rgba(255, 193, 7, 0.8);
             border: none;
             border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            font-size: 16px;
+            width: 30px;
+            height: 30px;
+            font-size: 14px;
             cursor: pointer;
             transition: all 0.3s;
             display: flex;
@@ -544,9 +1004,9 @@
             background: rgba(255, 99, 71, 0.8);
             border: none;
             border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            font-size: 16px;
+            width: 30px;
+            height: 30px;
+            font-size: 14px;
             cursor: pointer;
             transition: all 0.3s;
             display: flex;
@@ -669,6 +1129,16 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
         .empty-state {
             text-align: center;
             color: #666;
@@ -680,31 +1150,56 @@
             display: none !important;
         }
 
-        @media (max-width: 600px) {
-            .word-input-section {
-                flex-direction: column;
-            }
-            
-            .word-boxes {
-                flex-direction: column;
-                align-items: center;
-            }
-            
+        @media (max-width: 768px) {
             .content {
                 padding: 20px;
             }
 
-            .mode-buttons {
+            .mode-buttons, .box-count-controls {
                 flex-direction: column;
                 align-items: center;
             }
 
-            .input-mode-selector {
+            .category-tabs {
                 justify-content: center;
             }
 
-            .category-tabs {
-                justify-content: center;
+            .list-controls {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .word-input-section {
+                flex-direction: column;
+            }
+
+            .preset-save-controls {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .preset-actions {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .backup-actions {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .backup-actions button, .backup-actions label {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .backup-actions-detail {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .backup-actions-detail button {
+                width: 100%;
             }
 
             .bulk-delete-controls {
@@ -742,17 +1237,23 @@
                 </div>
             </div>
 
+            <!-- ボックス数選択 -->
+            <div class="box-count-selector">
+                <h3>📦 ボックス数設定</h3>
+                <p>組み合わせるボックスの数を選択してください（2～10個）</p>
+                <div class="box-count-controls">
+                    <button class="box-count-btn" onclick="changeBoxCount(-1)">-</button>
+                    <div class="box-count-display" id="boxCountDisplay">2</div>
+                    <button class="box-count-btn" onclick="changeBoxCount(1)">+</button>
+                </div>
+            </div>
+
             <div class="section">
                 <h2>📝 単語を追加</h2>
                 
                 <!-- カテゴリタブ（カテゴリモードのみ表示） -->
                 <div class="category-tabs hidden" id="categoryTabs">
-                    <div class="category-tab active" onclick="setActiveCategory(1)" id="tab1">
-                        📦 ボックス1の単語
-                    </div>
-                    <div class="category-tab" onclick="setActiveCategory(2)" id="tab2">
-                        📦 ボックス2の単語
-                    </div>
+                    <!-- 動的に生成される -->
                 </div>
                 
                 <!-- 単語追加方法の切り替え -->
@@ -797,42 +1298,87 @@
                 </div>
                 
                 <div class="list-controls">
+                    <button class="preset-btn" onclick="showPresetPanel()" id="presetBtn">
+                        💾 プリセット管理
+                    </button>
                     <button class="bulk-select-btn" onclick="toggleBulkSelectMode()" id="bulkSelectBtn">
                         ✅ まとめて削除
                     </button>
                 </div>
+
+                <!-- プリセット管理パネル -->
+                <div class="preset-panel" id="presetPanel" style="display: none;">
+                    <h4>📦 プリセット管理</h4>
+                    
+                    <!-- 保存セクション -->
+                    <div class="preset-save-section">
+                        <h5>💾 現在の単語セットを保存</h5>
+                        <div class="preset-save-controls">
+                            <input type="text" id="presetNameInput" placeholder="プリセット名を入力..." maxlength="50">
+                            <button class="save-preset-btn" onclick="saveCurrentPreset()">保存</button>
+                        </div>
+                        <div class="current-preset-info">
+                            <span id="currentWordsCount">0</span>個の単語が保存されます
+                        </div>
+                    </div>
+
+                    <!-- ロードセクション -->
+                    <div class="preset-load-section">
+                        <h5>📂 保存済みプリセット</h5>
+                        <div class="preset-list" id="presetList">
+                            <div class="no-presets">保存されたプリセットはありません</div>
+                        </div>
+                    </div>
+
+                    <!-- バックアップセクション -->
+                    <div class="backup-section">
+                        <h5>🛡️ バックアップ管理</h5>
+                        <div class="backup-controls">
+                            <div class="backup-info">
+                                <div class="auto-backup-status" id="autoBackupStatus">
+                                    🔄 自動バックアップ: <span id="autoBackupTime">未実行</span>
+                                </div>
+                                <div class="backup-count">
+                                    📦 バックアップ数: <span id="backupCount">0</span>個
+                                </div>
+                            </div>
+                            <div class="backup-actions">
+                                <button class="manual-backup-btn" onclick="createManualBackup()">📥 手動バックアップ</button>
+                                <button class="export-backup-btn" onclick="exportBackup()">📤 エクスポート</button>
+                                <label class="import-backup-btn" for="importFile">📂 インポート
+                                    <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importBackup(event)">
+                                </label>
+                                <button class="restore-backup-btn" onclick="showBackupList()">🔄 復元</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="preset-panel-controls">
+                        <button class="close-preset-btn" onclick="hidePresetPanel()">閉じる</button>
+                    </div>
+                </div>
+
+                <!-- バックアップリストパネル -->
+                <div class="backup-list-panel" id="backupListPanel" style="display: none;">
+                    <h4>🔄 バックアップ復元</h4>
+                    <div class="backup-list" id="backupList">
+                        <div class="no-backups">バックアップがありません</div>
+                    </div>
+                    <div class="backup-panel-controls">
+                        <button class="close-backup-btn" onclick="hideBackupList()">閉じる</button>
+                    </div>
+                </div>
             </div>
             
             <div class="section">
-                <button class="generate-btn" id="generateBtn" onclick="generateRandomPair()" disabled>
+                <button class="generate-btn" id="generateBtn" onclick="generateRandomCombination()" disabled>
                     🎯 ランダムな組み合わせを生成
                 </button>
                 
                 <div class="result-section" id="resultSection" style="display: none;">
                     <h3>✨ 今日の組み合わせ</h3>
                     <div class="word-boxes" id="wordBoxes">
-                        <div class="word-box box1" id="wordBox1" onclick="selectBox(1)">
-                            <div class="category-label" id="label1">ボックス1</div>
-                            <div class="word-text" id="word1">単語1</div>
-                            <div class="hint">クリックして変更</div>
-                            <button class="pin-btn" onclick="event.stopPropagation(); togglePin(1)" title="この単語を固定/解除" id="pinBtn1">
-                                📌
-                            </button>
-                            <button class="dislike-btn" onclick="event.stopPropagation(); dislikeWord(1)" title="この単語を除外">
-                                👎
-                            </button>
-                        </div>
-                        <div class="word-box box2" id="wordBox2" onclick="selectBox(2)">
-                            <div class="category-label" id="label2">ボックス2</div>
-                            <div class="word-text" id="word2">単語2</div>
-                            <div class="hint">クリックして変更</div>
-                            <button class="pin-btn" onclick="event.stopPropagation(); togglePin(2)" title="この単語を固定/解除" id="pinBtn2">
-                                📌
-                            </button>
-                            <button class="dislike-btn" onclick="event.stopPropagation(); dislikeWord(2)" title="この単語を除外">
-                                👎
-                            </button>
-                        </div>
+                        <!-- 動的に生成される -->
                     </div>
                 </div>
                 
@@ -853,259 +1399,181 @@
 
     <script>
         let currentMode = 'mixed'; // 'mixed' or 'category'
-        let activeCategory = 1; // 1 or 2 (for category mode)
+        let boxCount = 2; // 現在のボックス数
+        let activeCategory = 1; // アクティブなカテゴリ（カテゴリモード用）
         let inputMode = 'single'; // 'single' or 'bulk'
         
         // ミックスモード用
         let mixedWords = [];
         let excludedMixedWords = [];
         
-        // カテゴリモード用
-        let category1Words = [];
-        let category2Words = [];
-        let excludedCategory1Words = [];
-        let excludedCategory2Words = [];
+        // カテゴリモード用（最大10ボックス分）
+        let categoryWords = {};
+        let excludedCategoryWords = {};
         
-        let currentWord1 = '';
-        let currentWord2 = '';
+        // 現在の単語とピン状態
+        let currentWords = {};
+        let pinnedWords = {};
+        
         let selectedBox = 0;
-        
-        // 固定機能用
-        let pinnedWord1 = false;
-        let pinnedWord2 = false;
-        
-        // まとめて削除機能用
         let bulkSelectMode = false;
         let selectedWords = new Set();
+        
+        // プリセット機能用
+        let savedPresets = {};
+        let presetCounter = 0;
+        
+        // バックアップ機能用
+        let backupData = {};
+        let backupCounter = 0;
+        let autoBackupInterval = null;
+        let lastAutoBackup = null;
 
-        // 初期単語を追加（詳細なゲーム構成要素）
-        const initialMixedWords = [
-            // 基本要素
-            'HP', 'MP', 'ゲージ', '画面', 'コントローラー', 'オプション', 'タイトル', '判定', 'ディスプレイ', 'プレイヤー', 
-            '移動', 'スティック', 'ボタン', 'ジャンル', 'ローグライク', '文字', '解像度', 'フォント', 'メニュー', 'インベントリ',
-            
-            // コア・システム要素
-            'エンジン', 'フレームワーク', 'アーキテクチャ', 'プラットフォーム', 'OS', 'ハードウェア', 'CPU', 'GPU', 'メモリ', 'ストレージ', 
-            '帯域幅', 'レイテンシ', 'サーバー', 'クライアント', 'ピアツーピア', 'フレームレート', 'V-Sync', 'レンダリング', '描画', '最適化',
-            
-            // 入力・操作系
-            'キーバインド', 'ホットキー', 'ショートカット', 'マクロ', '入力遅延', '応答性', 'フィードバック', '振動', '感度調整', 'デッドゾーン', 
-            '加速度', '減速', 'スムージング', '予測入力', 'キーボード', 'マウス', 'タッチ', 'ジェスチャー', '十字キー', 'アナログスティック',
-            
-            // UI・画面要素
-            'ステータス', 'HUD', 'ミニマップ', 'アイコン', 'カーソル', 'ツールチップ', 'ダイアログ', 'ポップアップ', 'スライダー', 'チェックボックス', 
-            'ヘッダー', 'フッター', 'サイドバー', 'ナビゲーションバー', 'タブ', 'アコーディオン', 'モーダル', 'オーバーレイ', 'ドロップダウン', 'コンテキストメニュー',
-            
-            // 表示・視覚要素
-            'フレームバッファ', 'Zバッファ', 'アルファブレンド', 'マルチサンプリング', 'アンチエイリアス', 'ミップマップ', 'LOD', 'カリング', 'オクルージョン', 
-            'ライトマップ', '反射', '屈折', 'シェーダー', 'テクスチャ', 'マテリアル', 'ライティング', '影', 'パーティクル', 'エフェクト', 'アニメーション',
-            
-            // ゲームプレイ・メカニクス
-            'レベル', '経験値', 'スキル', 'アビリティ', 'クラス', 'ジョブ', 'パラメータ', '能力値', '攻撃力', '防御力', '素早さ', '魔力', '運', 
-            'クリティカル', '回避', '命中', '耐性', 'ルール', '制約', '条件', 'バランス', '調整', 'テストプレイ', 'デバッグ', 'パフォーマンス',
-            
-            // 戦闘・アクション詳細
-            '攻撃', '防御', '魔法', 'スキル発動', 'コンボ', '必殺技', 'ガード', '回復', 'バフ', 'デバフ', '状態異常', '毒', '麻痺', '眠り', '混乱',
-            '先制攻撃', '追撃', '連撃', '反撃', '迎撃', '牽制', 'フェイント', '回り込み', '突進', '後退', '離脱', '包囲', '挟み撃ち', '奇襲', '待ち伏せ',
-            
-            // アイテム・装備詳細
-            '武器', '防具', 'アクセサリー', '消耗品', '回復アイテム', '素材', '通貨', 'ゴールド', 'コイン', 'ジェム', 'ポーション', 'エリクサー', '鍵', '宝箱',
-            'レアリティ', '品質', '耐久度', '重量', 'サイズ', 'スタック', '所持制限', 'エンチャント', '強化', '改造', '分解', '修理', '売却', '廃棄',
-            
-            // キャラクター・エンティティ
-            '主人公', '仲間', 'NPC', '敵', 'ボス', '商人', 'ガイド', 'モンスター', 'ドラゴン', 'スライム', 'ゴブリン', 'エルフ', 'ドワーフ',
-            'アバター', 'カスタマイゼーション', '外見', '服装', '髪型', '肌色', '身長', '体型', '性別', '年齢', '職業', '出身', '性格', '嗜好', '関係性',
-            
-            // 世界・環境詳細
-            'ワールド', 'ステージ', 'フィールド', 'ダンジョン', '街', '村', '城', '塔', '洞窟', '森', '山', '海', '砂漠', '氷原', '火山', '空', '地下', '異世界',
-            '地形', '高低差', '障害物', '隠し通路', '秘密エリア', 'ワープポイント', 'セーブポイント', '回復ポイント', 'ショップ', '宿屋', 'ギルド', '酒場', '教会',
-            
-            // ストーリー・世界観
-            'シナリオ', '脚本', '台詞', 'ナレーション', 'モノローグ', '会話', '選択肢', '分岐', 'フラグ', 'イベント', 'カットイン', 'フラッシュバック', '伏線', 'どんでん返し',
-            'クエスト', 'ミッション', '目標', 'チャレンジ', 'パズル', '謎解き', '探索', '収集', '育成', '合成', 'クラフト', '建築', '農業',
-            
-            // オーディオ詳細
-            'BGM', 'SE', 'ボイス', '効果音', '音量', 'ミュート', 'グラフィック', '音響効果', '残響', 'エコー', 'ディストーション', 'フィルター', 
-            'イコライザー', 'コンプレッサー', 'リバーブ', 'ディレイ', 'モジュレーション', 'サンプリング', 'シンセサイザー', 'サウンドトラック', 'テーマ曲',
-            
-            // 進行・セーブ詳細
-            'セーブ', 'ロード', 'オートセーブ', 'チェックポイント', '進行度', 'クリア', 'ゲームオーバー', 'リスタート', 'コンティニュー', 'ニューゲーム', 
-            '周回', 'エンディング', '変数', 'フラグ', '配列', 'オブジェクト', '構造体', 'クラス', '継承', 'ポリモーフィズム', 'シリアライゼーション',
-            
-            // ネットワーク詳細
-            'オンライン', 'オフライン', 'マルチプレイ', '協力プレイ', '対戦', 'ランキング', 'リーダーボード', 'フレンド', 'ギルド', 'チャット', 'ボイスチャット',
-            '接続', '切断', '再接続', '同期', '非同期', '予測', '補間', '補正', 'ロールバック', 'パケット', 'プロトコル', '暗号化', '認証', 'セッション',
-            
-            // AI・自動化
-            '人工知能', '機械学習', '深層学習', '決定木', '状態機械', '行動木', 'ニューラルネットワーク', '遺伝的アルゴリズム', 'A*', 'ダイクストラ', 'パスファインディング',
-            
-            // 物理・シミュレーション
-            '剛体', '軟体', '流体', '粒子', '衝突検出', '摩擦', '弾性', '粘性', '浮力', '風力', '磁力', '電力', '熱力', '音波', '光波', '重力', '物理法則',
-            
-            // ジャンル・システム
-            'RPG', 'アクション', 'シューティング', 'パズルゲーム', 'シミュレーション', 'レーシング', '格闘', '音楽ゲーム', 'ホラー', 'アドベンチャー', 
-            'ストラテジー', 'FPS', 'TPS', 'MMORPG', 'JRPG', 'RTS', 'MOBA', 'バトルロワイヤル', 'サンドボックス', 'メトロイドヴァニア'
-        ];
-        
-        const initialCategory1Words = [
-            // システム・技術系
-            'HP', 'MP', 'ゲージ', 'ステータス', 'レベル', '経験値', 'スキル', '攻撃力', '防御力', '素早さ', '魔力', '運', 'クリティカル', '回避', '命中', '耐性',
-            'エンジン', 'フレームワーク', 'CPU', 'GPU', 'メモリ', 'レンダリング', 'フレームレート', 'アルゴリズム', 'AI', '物理演算', 'シェーダー', 'テクスチャ',
-            'バフ', 'デバフ', '状態異常', '毒', '麻痺', '眠り', '混乱', '能力値', 'パラメータ', 'アビリティ', 'クラス', 'ジョブ', '進行度', '難易度', '音量',
-            'レアリティ', '品質', '耐久度', '重量', 'エンチャント', '強化', '改造', 'ネットワーク', '同期', '非同期', '予測', '補間', '暗号化', '認証'
-        ];
-        
-        const initialCategory2Words = [
-            // オブジェクト・場所・インターフェース系
-            '画面', 'メニュー', 'インベントリ', 'HUD', 'ミニマップ', 'アイコン', 'カーソル', 'ツールチップ', 'ダイアログ', 'ポップアップ', 'スライダー', 'チェックボックス',
-            'コントローラー', 'キーボード', 'マウス', 'スティック', 'ボタン', '十字キー', 'トリガー', 'ナビゲーションバー', 'タブ', 'モーダル', 'オーバーレイ', 'ドロップダウン',
-            '武器', '防具', 'アクセサリー', '消耗品', '回復アイテム', '素材', '通貨', 'ポーション', 'エリクサー', '鍵', '宝箱', 'ワールド', 'ステージ', 'フィールド', 'ダンジョン',
-            '街', '村', '城', '塔', '洞窟', '森', '山', '海', '砂漠', 'クエスト', 'ミッション', '目標', 'チャレンジ', 'パズル', '謎解き', '探索', '収集', '育成', '合成', 'クラフト',
-            'セーブ', 'ロード', 'オートセーブ', 'チェックポイント', 'BGM', 'SE', 'エフェクト', 'アニメーション', 'パーティクル', 'キャラクター', 'NPC', 'ボス', 'モンスター'
-        ];
-        
-        mixedWords = [...initialMixedWords];
-        category1Words = [...initialCategory1Words];
-        category2Words = [...initialCategory2Words];
-        
-        updateWordList();
-        updateGenerateButton();
-        updateExcludedWordsSection();
+        // 初期単語データ
+        const initialWords = {
+            mixed: [
+                'HP', 'MP', 'ゲージ', '画面', 'コントローラー', 'オプション', 'タイトル', '判定', 'ディスプレイ', 'プレイヤー', 
+                '移動', 'スティック', 'ボタン', 'ジャンル', 'ローグライク', '文字', '解像度', 'フォント', 'メニュー', 'インベントリ',
+                'エンジン', 'フレームワーク', 'アーキテクチャ', 'プラットフォーム', 'OS', 'ハードウェア', 'CPU', 'GPU', 'メモリ', 'ストレージ', 
+                '帯域幅', 'レイテンシ', 'サーバー', 'クライアント', 'ピアツーピア', 'フレームレート', 'V-Sync', 'レンダリング', '描画', '最適化'
+            ],
+            categories: {
+                1: ['HP', 'MP', 'ゲージ', 'ステータス', 'レベル', '経験値', 'スキル', '攻撃力', '防御力', '素早さ', '魔力', '運', 'クリティカル', '回避', '命中', '耐性'],
+                2: ['画面', 'メニュー', 'インベントリ', 'HUD', 'ミニマップ', 'アイコン', 'カーソル', 'ツールチップ', 'ダイアログ', 'ポップアップ', 'スライダー', 'チェックボックス'],
+                3: ['武器', '防具', 'アクセサリー', '消耗品', '回復アイテム', '素材', '通貨', 'ポーション', 'エリクサー', '鍵', '宝箱', 'レアリティ', '品質', '耐久度', '重量', 'エンチャント'],
+                4: ['ワールド', 'ステージ', 'フィールド', 'ダンジョン', '街', '村', '城', '塔', '洞窟', '森', '山', '海', '砂漠', '氷原', '火山', '空'],
+                5: ['攻撃', '防御', '魔法', 'スキル発動', 'コンボ', '必殺技', 'ガード', '回復', 'バフ', 'デバフ', '状態異常', '毒', '麻痺', '眠り', '混乱', '先制攻撃'],
+                6: ['キャラクター', 'NPC', 'ボス', 'モンスター', 'ドラゴン', 'スライム', 'ゴブリン', 'エルフ', 'ドワーフ', 'アバター', 'カスタマイゼーション', '外見', '服装', '髪型'],
+                7: ['クエスト', 'ミッション', '目標', 'チャレンジ', 'パズル', '謎解き', '探索', '収集', '育成', '合成', 'クラフト', '建築', '農業', 'シナリオ', '脚本', '台詞'],
+                8: ['BGM', 'SE', 'ボイス', '効果音', '音量', 'ミュート', 'グラフィック', '音響効果', '残響', 'エコー', 'ディストーション', 'フィルター', 'イコライザー', 'コンプレッサー'],
+                9: ['セーブ', 'ロード', 'オートセーブ', 'チェックポイント', '進行度', 'クリア', 'ゲームオーバー', 'リスタート', 'コンティニュー', 'ニューゲーム', '周回', 'エンディング'],
+                10: ['オンライン', 'オフライン', 'マルチプレイ', '協力プレイ', '対戦', 'ランキング', 'リーダーボード', 'フレンド', 'ギルド', 'チャット', 'ボイスチャット', '接続', '切断']
+            }
+        };
 
-        function togglePin(boxNumber) {
-            if (boxNumber === 1) {
-                pinnedWord1 = !pinnedWord1;
-                updatePinDisplay(1, pinnedWord1);
-            } else {
-                pinnedWord2 = !pinnedWord2;
-                updatePinDisplay(2, pinnedWord2);
+        // 初期化
+        function initializeApp() {
+            // 初期単語データを設定
+            mixedWords = [...initialWords.mixed];
+            
+            for (let i = 1; i <= 10; i++) {
+                categoryWords[i] = initialWords.categories[i] ? [...initialWords.categories[i]] : [];
+                excludedCategoryWords[i] = [];
+                currentWords[i] = '';
+                pinnedWords[i] = false;
             }
             
-            const word = boxNumber === 1 ? currentWord1 : currentWord2;
-            const isPinned = boxNumber === 1 ? pinnedWord1 : pinnedWord2;
-            
-            showNotification(
-                `「${word}」を${isPinned ? '固定' : '固定解除'}しました`,
-                isPinned ? 'success' : 'warning'
-            );
+            updateUI();
+            loadPresets();
+            initializeBackupSystem();
         }
 
-        function updatePinDisplay(boxNumber, isPinned) {
-            const box = document.getElementById(`wordBox${boxNumber}`);
-            const btn = document.getElementById(`pinBtn${boxNumber}`);
-            
-            if (isPinned) {
-                box.classList.add('pinned');
-                btn.classList.add('pinned');
-                btn.title = 'この単語の固定を解除';
-            } else {
-                box.classList.remove('pinned');
-                btn.classList.remove('pinned');
-                btn.title = 'この単語を固定';
+        function changeBoxCount(delta) {
+            const newCount = boxCount + delta;
+            if (newCount >= 2 && newCount <= 10) {
+                boxCount = newCount;
+                updateUI();
             }
         }
 
-        function dislikeWord(boxNumber) {
-            const wordToExclude = boxNumber === 1 ? currentWord1 : currentWord2;
-            
-            if (currentMode === 'mixed') {
-                // ミックスモードでの除外
-                mixedWords = mixedWords.filter(w => w !== wordToExclude);
-                if (!excludedMixedWords.includes(wordToExclude)) {
-                    excludedMixedWords.push(wordToExclude);
-                }
-            } else {
-                // カテゴリモードでの除外
-                if (boxNumber === 1) {
-                    category1Words = category1Words.filter(w => w !== wordToExclude);
-                    if (!excludedCategory1Words.includes(wordToExclude)) {
-                        excludedCategory1Words.push(wordToExclude);
-                    }
-                } else {
-                    category2Words = category2Words.filter(w => w !== wordToExclude);
-                    if (!excludedCategory2Words.includes(wordToExclude)) {
-                        excludedCategory2Words.push(wordToExclude);
-                    }
-                }
-            }
-            
+        function updateUI() {
+            document.getElementById('boxCountDisplay').textContent = boxCount;
+            updateCategoryTabs();
+            updateWordBoxes();
             updateWordList();
             updateGenerateButton();
             updateExcludedWordsSection();
+        }
+
+        function updateCategoryTabs() {
+            const tabsContainer = document.getElementById('categoryTabs');
             
-            // まとめて削除モードもリセット
+            if (currentMode === 'category') {
+                tabsContainer.classList.remove('hidden');
+                tabsContainer.innerHTML = '';
+                
+                for (let i = 1; i <= boxCount; i++) {
+                    const tab = document.createElement('div');
+                    tab.className = `category-tab ${i === activeCategory ? 'active' : ''}`;
+                    tab.textContent = `📦 ボックス${i}の単語`;
+                    tab.onclick = () => setActiveCategory(i);
+                    tabsContainer.appendChild(tab);
+                }
+            } else {
+                tabsContainer.classList.add('hidden');
+            }
+        }
+
+        function updateWordBoxes() {
+            const container = document.getElementById('wordBoxes');
+            container.innerHTML = '';
+            
+            for (let i = 1; i <= boxCount; i++) {
+                const box = document.createElement('div');
+                box.className = `word-box box${i} ${pinnedWords[i] ? 'pinned' : ''}`;
+                box.onclick = () => selectBox(i);
+                
+                box.innerHTML = `
+                    <div class="category-label">ボックス${i}</div>
+                    <div class="word-text" id="word${i}">${currentWords[i] || '単語' + i}</div>
+                    <div class="hint">クリックして変更</div>
+                    <button class="pin-btn ${pinnedWords[i] ? 'pinned' : ''}" onclick="event.stopPropagation(); togglePin(${i})" title="この単語を固定/解除">
+                        📌
+                    </button>
+                    <button class="dislike-btn" onclick="event.stopPropagation(); dislikeWord(${i})" title="この単語を除外">
+                        👎
+                    </button>
+                `;
+                
+                container.appendChild(box);
+            }
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            
+            // ボタンの状態を更新
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            updateUI();
+            
+            // 結果をリセット
+            document.getElementById('resultSection').style.display = 'none';
+            document.getElementById('replacementPanel').style.display = 'none';
+            
+            // 固定状態とピン状態をリセット
+            for (let i = 1; i <= boxCount; i++) {
+                currentWords[i] = '';
+                pinnedWords[i] = false;
+            }
+            
             if (bulkSelectMode) {
                 toggleBulkSelectMode();
             }
-            updateExcludedWordsSection();
-            
-            // 新しい組み合わせを自動生成
-            generateRandomPair();
-            
-            showNotification(`「${wordToExclude}」を除外しました`, 'warning');
         }
 
-        function restoreWord(word) {
-            if (currentMode === 'mixed') {
-                excludedMixedWords = excludedMixedWords.filter(w => w !== word);
-                if (!mixedWords.includes(word)) {
-                    mixedWords.push(word);
-                }
-            } else {
-                if (excludedCategory1Words.includes(word)) {
-                    excludedCategory1Words = excludedCategory1Words.filter(w => w !== word);
-                    if (!category1Words.includes(word)) {
-                        category1Words.push(word);
-                    }
-                }
-                if (excludedCategory2Words.includes(word)) {
-                    excludedCategory2Words = excludedCategory2Words.filter(w => w !== word);
-                    if (!category2Words.includes(word)) {
-                        category2Words.push(word);
-                    }
-                }
-            }
-            
+        function setActiveCategory(category) {
+            activeCategory = category;
+            updateCategoryTabs();
             updateWordList();
-            updateGenerateButton();
-            updateExcludedWordsSection();
-            
-            showNotification(`「${word}」を復活させました`, 'success');
         }
 
-        function updateExcludedWordsSection() {
-            const section = document.getElementById('excludedWordsSection');
-            const container = document.getElementById('excludedWords');
-            
-            let excludedWords = [];
+        function getCurrentWords() {
             if (currentMode === 'mixed') {
-                excludedWords = excludedMixedWords;
+                return mixedWords;
             } else {
-                excludedWords = [...excludedCategory1Words, ...excludedCategory2Words];
+                return categoryWords[activeCategory] || [];
             }
-            
-            if (excludedWords.length === 0) {
-                section.style.display = 'none';
-                return;
-            }
-            
-            section.style.display = 'block';
-            container.innerHTML = excludedWords.map(word => `
-                <div class="excluded-word" onclick="restoreWord('${word}')" title="クリックで復活">
-                    ${word}
-                </div>
-            `).join('');
         }
 
         function setInputMode(mode) {
             inputMode = mode;
             
-            // ボタンの状態を更新
             document.getElementById('singleModeBtn').classList.remove('active');
             document.getElementById('bulkModeBtn').classList.remove('active');
             document.getElementById(mode + 'ModeBtn').classList.add('active');
             
-            // 入力エリアの表示/非表示
             const singleSection = document.getElementById('singleInputSection');
             const bulkSection = document.getElementById('bulkInputSection');
             
@@ -1118,12 +1586,18 @@
             }
         }
 
-        function parseBulkInput(text) {
-            // 改行、カンマ、スペースで分割
-            return text
-                .split(/[\n,\s]+/)
-                .map(word => word.trim())
-                .filter(word => word.length > 0);
+        function addWord() {
+            const input = document.getElementById('wordInput');
+            const word = input.value.trim();
+            const currentWords = getCurrentWords();
+            
+            if (word && !currentWords.includes(word)) {
+                currentWords.push(word);
+                input.value = '';
+                updateWordList();
+                updateGenerateButton();
+                showNotification(`「${word}」を追加しました！`);
+            }
         }
 
         function addBulkWords() {
@@ -1147,146 +1621,29 @@
                 input.value = '';
                 updateWordList();
                 updateGenerateButton();
-                
-                // 追加結果を表示
                 showNotification(`${addedCount}個の単語を追加しました！`);
             } else {
                 showNotification('追加できる新しい単語がありませんでした。', 'warning');
             }
         }
 
+        function parseBulkInput(text) {
+            return text
+                .split(/[\n,\s]+/)
+                .map(word => word.trim())
+                .filter(word => word.length > 0);
+        }
+
         function clearBulkInput() {
             document.getElementById('bulkInput').value = '';
-        }
-
-        function showNotification(message, type = 'success') {
-            // 通知を表示する関数
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.textContent = message;
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: ${type === 'success' ? '#00b894' : '#fdcb6e'};
-                color: white;
-                padding: 15px 20px;
-                border-radius: 10px;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-                z-index: 1000;
-                animation: slideInRight 0.3s ease;
-            `;
-            
-            document.body.appendChild(notification);
-            
-            // 3秒後に自動削除
-            setTimeout(() => {
-                notification.style.animation = 'slideOutRight 0.3s ease';
-                setTimeout(() => {
-                    if (notification.parentNode) {
-                        notification.parentNode.removeChild(notification);
-                    }
-                }, 300);
-            }, 3000);
-        }
-
-        // CSS アニメーションを動的に追加
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideInRight {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideOutRight {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-
-        function setMode(mode) {
-            currentMode = mode;
-            
-            // ボタンの状態を更新
-            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            // カテゴリタブの表示/非表示
-            const categoryTabs = document.getElementById('categoryTabs');
-            const label1 = document.getElementById('label1');
-            const label2 = document.getElementById('label2');
-            
-            if (mode === 'category') {
-                categoryTabs.classList.remove('hidden');
-                label1.style.display = 'block';
-                label2.style.display = 'block';
-            } else {
-                categoryTabs.classList.add('hidden');
-                label1.style.display = 'none';
-                label2.style.display = 'none';
-            }
-            
-            updateWordList();
-            updateGenerateButton();
-            updateExcludedWordsSection();
-            
-            // 結果をリセット
-            document.getElementById('resultSection').style.display = 'none';
-            document.getElementById('replacementPanel').style.display = 'none';
-            
-            // 固定状態もリセット
-            pinnedWord1 = false;
-            pinnedWord2 = false;
-            updatePinDisplay(1, false);
-            updatePinDisplay(2, false);
-            
-            // まとめて削除モードもリセット
-            if (bulkSelectMode) {
-                toggleBulkSelectMode();
-            }
-        }
-
-        function setActiveCategory(category) {
-            activeCategory = category;
-            
-            // タブの状態を更新
-            document.getElementById('tab1').classList.remove('active');
-            document.getElementById('tab2').classList.remove('active');
-            document.getElementById(`tab${category}`).classList.add('active');
-            
-            updateWordList();
-        }
-
-        function getCurrentWords() {
-            if (currentMode === 'mixed') {
-                return mixedWords;
-            } else {
-                return activeCategory === 1 ? category1Words : category2Words;
-            }
-        }
-
-        function addWord() {
-            const input = document.getElementById('wordInput');
-            const word = input.value.trim();
-            const currentWords = getCurrentWords();
-            
-            if (word && !currentWords.includes(word)) {
-                currentWords.push(word);
-                input.value = '';
-                updateWordList();
-                updateGenerateButton();
-            }
         }
 
         function removeWord(word) {
             if (currentMode === 'mixed') {
                 mixedWords = mixedWords.filter(w => w !== word);
             } else {
-                if (activeCategory === 1) {
-                    category1Words = category1Words.filter(w => w !== word);
-                } else {
-                    category2Words = category2Words.filter(w => w !== word);
-                }
+                const words = categoryWords[activeCategory] || [];
+                categoryWords[activeCategory] = words.filter(w => w !== word);
             }
             updateWordList();
             updateGenerateButton();
@@ -1304,7 +1661,7 @@
             
             let categoryClass = '';
             if (currentMode === 'category') {
-                categoryClass = activeCategory === 1 ? 'category1' : 'category2';
+                categoryClass = `box${activeCategory}`;
             }
             
             wordList.innerHTML = currentWords.map(word => {
@@ -1417,65 +1774,77 @@
             const generateBtn = document.getElementById('generateBtn');
             
             if (currentMode === 'mixed') {
-                generateBtn.disabled = mixedWords.length < 2;
+                generateBtn.disabled = mixedWords.length < boxCount;
             } else {
-                generateBtn.disabled = category1Words.length === 0 || category2Words.length === 0;
+                let hasEnoughWords = true;
+                for (let i = 1; i <= boxCount; i++) {
+                    if ((categoryWords[i] || []).length === 0) {
+                        hasEnoughWords = false;
+                        break;
+                    }
+                }
+                generateBtn.disabled = !hasEnoughWords;
             }
         }
 
-        function generateRandomPair() {
+        function generateRandomCombination() {
             if (currentMode === 'mixed') {
-                if (mixedWords.length < 2) return;
+                if (mixedWords.length < boxCount) return;
                 
-                // 固定されていない場合のみ新しい単語を選択
-                if (!pinnedWord1) {
-                    const availableWords = mixedWords.filter(word => word !== currentWord2);
-                    currentWord1 = availableWords[Math.floor(Math.random() * availableWords.length)];
+                const shuffled = [...mixedWords].sort(() => Math.random() - 0.5);
+                for (let i = 1; i <= boxCount; i++) {
+                    if (!pinnedWords[i]) {
+                        currentWords[i] = shuffled[i - 1] || mixedWords[Math.floor(Math.random() * mixedWords.length)];
+                    }
                 }
-                
-                if (!pinnedWord2) {
-                    const availableWords = mixedWords.filter(word => word !== currentWord1);
-                    currentWord2 = availableWords[Math.floor(Math.random() * availableWords.length)];
-                }
-                
             } else {
-                if (category1Words.length === 0 || category2Words.length === 0) return;
-                
-                // カテゴリモードでも固定機能を適用
-                if (!pinnedWord1) {
-                    currentWord1 = category1Words[Math.floor(Math.random() * category1Words.length)];
-                }
-                
-                if (!pinnedWord2) {
-                    currentWord2 = category2Words[Math.floor(Math.random() * category2Words.length)];
+                for (let i = 1; i <= boxCount; i++) {
+                    if (!pinnedWords[i]) {
+                        const words = categoryWords[i] || [];
+                        if (words.length > 0) {
+                            currentWords[i] = words[Math.floor(Math.random() * words.length)];
+                        }
+                    }
                 }
             }
             
-            document.getElementById('word1').textContent = currentWord1;
-            document.getElementById('word2').textContent = currentWord2;
+            // UIを更新
+            for (let i = 1; i <= boxCount; i++) {
+                const wordElement = document.getElementById(`word${i}`);
+                if (wordElement) {
+                    wordElement.textContent = currentWords[i];
+                }
+            }
+            
             document.getElementById('resultSection').style.display = 'block';
             document.getElementById('replacementPanel').style.display = 'none';
             
-            // リセット選択状態
-            document.getElementById('wordBox1').classList.remove('active');
-            document.getElementById('wordBox2').classList.remove('active');
+            // 選択状態をリセット
+            for (let i = 1; i <= boxCount; i++) {
+                const box = document.querySelector(`.word-box.box${i}`);
+                if (box) {
+                    box.classList.remove('active');
+                }
+            }
             selectedBox = 0;
-            
-            // 固定状態を維持
-            updatePinDisplay(1, pinnedWord1);
-            updatePinDisplay(2, pinnedWord2);
         }
 
         function selectBox(boxNumber) {
             // 前の選択をリセット
-            document.getElementById('wordBox1').classList.remove('active');
-            document.getElementById('wordBox2').classList.remove('active');
+            for (let i = 1; i <= boxCount; i++) {
+                const box = document.querySelector(`.word-box.box${i}`);
+                if (box) {
+                    box.classList.remove('active');
+                }
+            }
             
             // 新しい選択を設定
             selectedBox = boxNumber;
-            document.getElementById(`wordBox${boxNumber}`).classList.add('active');
+            const selectedBoxElement = document.querySelector(`.word-box.box${boxNumber}`);
+            if (selectedBoxElement) {
+                selectedBoxElement.classList.add('active');
+            }
             
-            // 置換パネルを表示
             showReplacementPanel();
         }
 
@@ -1484,16 +1853,13 @@
             const replacementWords = document.getElementById('replacementWords');
             
             let availableWords = [];
-            const currentWord = selectedBox === 1 ? currentWord1 : currentWord2;
+            const currentWord = currentWords[selectedBox];
             
             if (currentMode === 'mixed') {
                 availableWords = mixedWords.filter(word => word !== currentWord);
             } else {
-                if (selectedBox === 1) {
-                    availableWords = category1Words.filter(word => word !== currentWord);
-                } else {
-                    availableWords = category2Words.filter(word => word !== currentWord);
-                }
+                const words = categoryWords[selectedBox] || [];
+                availableWords = words.filter(word => word !== currentWord);
             }
             
             replacementWords.innerHTML = availableWords.map(word => `
@@ -1506,21 +1872,17 @@
         }
 
         function replaceWord(newWord) {
-            if (selectedBox === 1) {
-                currentWord1 = newWord;
-                document.getElementById('word1').textContent = newWord;
-                // 手動で変更した場合は固定を解除
-                if (pinnedWord1) {
-                    pinnedWord1 = false;
-                    updatePinDisplay(1, false);
+            if (selectedBox > 0 && selectedBox <= boxCount) {
+                currentWords[selectedBox] = newWord;
+                const wordElement = document.getElementById(`word${selectedBox}`);
+                if (wordElement) {
+                    wordElement.textContent = newWord;
                 }
-            } else if (selectedBox === 2) {
-                currentWord2 = newWord;
-                document.getElementById('word2').textContent = newWord;
+                
                 // 手動で変更した場合は固定を解除
-                if (pinnedWord2) {
-                    pinnedWord2 = false;
-                    updatePinDisplay(2, false);
+                if (pinnedWords[selectedBox]) {
+                    pinnedWords[selectedBox] = false;
+                    updatePinDisplay(selectedBox, false);
                 }
             }
             
@@ -1528,9 +1890,548 @@
             document.getElementById('replacementPanel').style.display = 'none';
             
             // 選択状態をリセット
-            document.getElementById('wordBox1').classList.remove('active');
-            document.getElementById('wordBox2').classList.remove('active');
+            for (let i = 1; i <= boxCount; i++) {
+                const box = document.querySelector(`.word-box.box${i}`);
+                if (box) {
+                    box.classList.remove('active');
+                }
+            }
             selectedBox = 0;
+        }
+
+        function togglePin(boxNumber) {
+            pinnedWords[boxNumber] = !pinnedWords[boxNumber];
+            updatePinDisplay(boxNumber, pinnedWords[boxNumber]);
+            
+            const word = currentWords[boxNumber];
+            const isPinned = pinnedWords[boxNumber];
+            
+            showNotification(
+                `「${word}」を${isPinned ? '固定' : '固定解除'}しました`,
+                isPinned ? 'success' : 'warning'
+            );
+        }
+
+        function updatePinDisplay(boxNumber, isPinned) {
+            const box = document.querySelector(`.word-box.box${boxNumber}`);
+            const btn = document.querySelector(`.word-box.box${boxNumber} .pin-btn`);
+            
+            if (box && btn) {
+                if (isPinned) {
+                    box.classList.add('pinned');
+                    btn.classList.add('pinned');
+                    btn.title = 'この単語の固定を解除';
+                } else {
+                    box.classList.remove('pinned');
+                    btn.classList.remove('pinned');
+                    btn.title = 'この単語を固定';
+                }
+            }
+        }
+
+        function dislikeWord(boxNumber) {
+            const wordToExclude = currentWords[boxNumber];
+            
+            if (currentMode === 'mixed') {
+                mixedWords = mixedWords.filter(w => w !== wordToExclude);
+                if (!excludedMixedWords.includes(wordToExclude)) {
+                    excludedMixedWords.push(wordToExclude);
+                }
+            } else {
+                const words = categoryWords[boxNumber] || [];
+                categoryWords[boxNumber] = words.filter(w => w !== wordToExclude);
+                if (!excludedCategoryWords[boxNumber]) {
+                    excludedCategoryWords[boxNumber] = [];
+                }
+                if (!excludedCategoryWords[boxNumber].includes(wordToExclude)) {
+                    excludedCategoryWords[boxNumber].push(wordToExclude);
+                }
+            }
+            
+            updateWordList();
+            updateGenerateButton();
+            updateExcludedWordsSection();
+            
+            if (bulkSelectMode) {
+                toggleBulkSelectMode();
+            }
+            
+            generateRandomCombination();
+            showNotification(`「${wordToExclude}」を除外しました`, 'warning');
+        }
+
+        function restoreWord(word) {
+            if (currentMode === 'mixed') {
+                excludedMixedWords = excludedMixedWords.filter(w => w !== word);
+                if (!mixedWords.includes(word)) {
+                    mixedWords.push(word);
+                }
+            } else {
+                for (let i = 1; i <= boxCount; i++) {
+                    if (excludedCategoryWords[i] && excludedCategoryWords[i].includes(word)) {
+                        excludedCategoryWords[i] = excludedCategoryWords[i].filter(w => w !== word);
+                        if (!categoryWords[i]) categoryWords[i] = [];
+                        if (!categoryWords[i].includes(word)) {
+                            categoryWords[i].push(word);
+                        }
+                    }
+                }
+            }
+            
+            updateWordList();
+            updateGenerateButton();
+            updateExcludedWordsSection();
+            showNotification(`「${word}」を復活させました`, 'success');
+        }
+
+        function updateExcludedWordsSection() {
+            const section = document.getElementById('excludedWordsSection');
+            const container = document.getElementById('excludedWords');
+            
+            let excludedWords = [];
+            if (currentMode === 'mixed') {
+                excludedWords = excludedMixedWords;
+            } else {
+                for (let i = 1; i <= boxCount; i++) {
+                    if (excludedCategoryWords[i]) {
+                        excludedWords = excludedWords.concat(excludedCategoryWords[i]);
+                    }
+                }
+            }
+            
+            if (excludedWords.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+            
+            section.style.display = 'block';
+            container.innerHTML = excludedWords.map(word => `
+                <div class="excluded-word" onclick="restoreWord('${word}')" title="クリックで復活">
+                    ${word}
+                </div>
+            `).join('');
+        }
+
+        // プリセット機能
+        function showPresetPanel() {
+            const panel = document.getElementById('presetPanel');
+            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+            updateCurrentWordsCount();
+            displayPresets();
+            updateBackupInfo();
+        }
+
+        function hidePresetPanel() {
+            document.getElementById('presetPanel').style.display = 'none';
+        }
+
+        function updateCurrentWordsCount() {
+            let totalWords = 0;
+            if (currentMode === 'mixed') {
+                totalWords = mixedWords.length;
+            } else {
+                for (let i = 1; i <= boxCount; i++) {
+                    totalWords += (categoryWords[i] || []).length;
+                }
+            }
+            document.getElementById('currentWordsCount').textContent = totalWords;
+        }
+
+        function saveCurrentPreset() {
+            const nameInput = document.getElementById('presetNameInput');
+            const presetName = nameInput.value.trim();
+            
+            if (!presetName) {
+                showNotification('プリセット名を入力してください', 'warning');
+                return;
+            }
+            
+            let totalWords = 0;
+            if (currentMode === 'mixed') {
+                totalWords = mixedWords.length;
+            } else {
+                for (let i = 1; i <= boxCount; i++) {
+                    totalWords += (categoryWords[i] || []).length;
+                }
+            }
+            
+            if (totalWords === 0) {
+                showNotification('保存する単語がありません', 'warning');
+                return;
+            }
+            
+            // プリセット保存
+            const presetId = `preset_${Date.now()}_${presetCounter++}`;
+            savedPresets[presetId] = {
+                name: presetName,
+                mode: currentMode,
+                boxCount: boxCount,
+                mixedWords: [...mixedWords],
+                categoryWords: {},
+                excludedMixedWords: [...excludedMixedWords],
+                excludedCategoryWords: {},
+                createdAt: new Date().toLocaleString(),
+                wordCount: totalWords
+            };
+            
+            // カテゴリワードもコピー
+            for (let i = 1; i <= 10; i++) {
+                savedPresets[presetId].categoryWords[i] = categoryWords[i] ? [...categoryWords[i]] : [];
+                savedPresets[presetId].excludedCategoryWords[i] = excludedCategoryWords[i] ? [...excludedCategoryWords[i]] : [];
+            }
+            
+            savePresets();
+            
+            nameInput.value = '';
+            displayPresets();
+            showNotification(`「${presetName}」を保存しました`, 'success');
+        }
+
+        function loadPreset(presetId) {
+            const preset = savedPresets[presetId];
+            if (!preset) {
+                showNotification('プリセットが見つかりません', 'error');
+                return;
+            }
+            
+            // モードを切り替え
+            if (preset.mode !== currentMode) {
+                currentMode = preset.mode;
+                updateModeUI();
+            }
+            
+            // ボックス数を設定
+            boxCount = preset.boxCount || 2;
+            
+            // 単語をロード
+            mixedWords.length = 0;
+            mixedWords.push(...preset.mixedWords);
+            excludedMixedWords.length = 0;
+            excludedMixedWords.push(...preset.excludedMixedWords);
+            
+            for (let i = 1; i <= 10; i++) {
+                categoryWords[i] = preset.categoryWords[i] ? [...preset.categoryWords[i]] : [];
+                excludedCategoryWords[i] = preset.excludedCategoryWords[i] ? [...preset.excludedCategoryWords[i]] : [];
+            }
+            
+            updateUI();
+            hidePresetPanel();
+            
+            showNotification(`「${preset.name}」をロードしました (${preset.wordCount}個の単語)`, 'success');
+        }
+
+        function deletePreset(presetId) {
+            const preset = savedPresets[presetId];
+            if (!preset) return;
+            
+            if (confirm(`「${preset.name}」を削除しますか？`)) {
+                delete savedPresets[presetId];
+                savePresets();
+                displayPresets();
+                showNotification(`「${preset.name}」を削除しました`, 'warning');
+            }
+        }
+
+        function displayPresets() {
+            const presetList = document.getElementById('presetList');
+            const presets = Object.entries(savedPresets);
+            
+            if (presets.length === 0) {
+                presetList.innerHTML = '<div class="no-presets">保存されたプリセットはありません</div>';
+                return;
+            }
+            
+            presetList.innerHTML = presets.map(([id, preset]) => `
+                <div class="preset-item">
+                    <div class="preset-item-header">
+                        <div class="preset-name">${preset.name}</div>
+                    </div>
+                    <div class="preset-info">
+                        ${preset.wordCount}個の単語 | ${preset.mode === 'mixed' ? 'ミックスモード' : 'カテゴリモード'} | ボックス数: ${preset.boxCount} | ${preset.createdAt}
+                    </div>
+                    <div class="preset-actions">
+                        <button class="load-preset-btn" onclick="loadPreset('${id}')">ロード</button>
+                        <button class="delete-preset-btn" onclick="deletePreset('${id}')">削除</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateModeUI() {
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            if (currentMode === 'mixed') {
+                document.querySelector('.mode-btn').classList.add('active');
+            } else {
+                document.querySelectorAll('.mode-btn')[1].classList.add('active');
+            }
+        }
+
+        function savePresets() {
+            // メモリ内に保持（ブラウザ環境ではlocalStorageは使用不可）
+        }
+
+        function loadPresets() {
+            // 初期化のみ
+            savedPresets = {};
+        }
+
+        // バックアップシステム
+        function initializeBackupSystem() {
+            loadBackups();
+            startAutoBackup();
+            updateBackupInfo();
+        }
+
+        function startAutoBackup() {
+            // 5分ごとに自動バックアップ
+            autoBackupInterval = setInterval(() => {
+                createAutoBackup();
+            }, 300000); // 5分
+        }
+
+        function createAutoBackup() {
+            const backupId = `auto_${Date.now()}_${backupCounter++}`;
+            const currentData = getCurrentAppState();
+            
+            backupData[backupId] = {
+                type: 'auto',
+                name: `自動バックアップ ${new Date().toLocaleString()}`,
+                data: currentData,
+                createdAt: new Date().toLocaleString(),
+                timestamp: Date.now()
+            };
+            
+            cleanupOldAutoBackups();
+            
+            lastAutoBackup = new Date().toLocaleString();
+            saveBackups();
+            updateBackupInfo();
+        }
+
+        function createManualBackup() {
+            const backupId = `manual_${Date.now()}_${backupCounter++}`;
+            const currentData = getCurrentAppState();
+            
+            backupData[backupId] = {
+                type: 'manual',
+                name: `手動バックアップ ${new Date().toLocaleString()}`,
+                data: currentData,
+                createdAt: new Date().toLocaleString(),
+                timestamp: Date.now()
+            };
+            
+            saveBackups();
+            updateBackupInfo();
+            showNotification('手動バックアップを作成しました', 'success');
+        }
+
+        function getCurrentAppState() {
+            return {
+                boxCount: boxCount,
+                mixedWords: [...mixedWords],
+                categoryWords: {...categoryWords},
+                excludedMixedWords: [...excludedMixedWords],
+                excludedCategoryWords: {...excludedCategoryWords},
+                savedPresets: {...savedPresets},
+                currentMode: currentMode,
+                activeCategory: activeCategory,
+                currentWords: {...currentWords},
+                pinnedWords: {...pinnedWords}
+            };
+        }
+
+        function restoreFromBackup(backupId) {
+            const backup = backupData[backupId];
+            if (!backup) {
+                showNotification('バックアップが見つかりません', 'error');
+                return;
+            }
+            
+            if (!confirm(`「${backup.name}」を復元しますか？現在のデータは失われます。`)) {
+                return;
+            }
+            
+            const data = backup.data;
+            
+            // データを復元
+            boxCount = data.boxCount || 2;
+            mixedWords.length = 0;
+            mixedWords.push(...data.mixedWords);
+            categoryWords = {...data.categoryWords};
+            excludedMixedWords.length = 0;
+            excludedMixedWords.push(...data.excludedMixedWords);
+            excludedCategoryWords = {...data.excludedCategoryWords};
+            
+            savedPresets = {...data.savedPresets};
+            currentMode = data.currentMode;
+            activeCategory = data.activeCategory;
+            currentWords = {...data.currentWords};
+            pinnedWords = {...data.pinnedWords};
+            
+            // UIを更新
+            updateModeUI();
+            updateUI();
+            displayPresets();
+            
+            hideBackupList();
+            showNotification(`「${backup.name}」から復元しました`, 'success');
+        }
+
+        function exportBackup() {
+            const exportData = {
+                backups: backupData,
+                appState: getCurrentAppState(),
+                exportDate: new Date().toLocaleString(),
+                version: '1.0'
+            };
+            
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `game-word-combiner-backup-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification('バックアップをエクスポートしました', 'success');
+        }
+
+        function importBackup(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importData = JSON.parse(e.target.result);
+                    
+                    if (!importData.backups || !importData.appState) {
+                        throw new Error('無効なバックアップファイルです');
+                    }
+                    
+                    if (confirm('バックアップをインポートしますか？現在のデータに追加されます。')) {
+                        Object.assign(backupData, importData.backups);
+                        saveBackups();
+                        updateBackupInfo();
+                        showNotification('バックアップをインポートしました', 'success');
+                    }
+                } catch (error) {
+                    showNotification('バックアップファイルの読み込みに失敗しました', 'error');
+                }
+            };
+            reader.readAsText(file);
+            
+            event.target.value = '';
+        }
+
+        function showBackupList() {
+            const panel = document.getElementById('backupListPanel');
+            panel.style.display = 'block';
+            displayBackups();
+        }
+
+        function hideBackupList() {
+            document.getElementById('backupListPanel').style.display = 'none';
+        }
+
+        function displayBackups() {
+            const backupList = document.getElementById('backupList');
+            const backups = Object.entries(backupData).sort((a, b) => b[1].timestamp - a[1].timestamp);
+            
+            if (backups.length === 0) {
+                backupList.innerHTML = '<div class="no-backups">バックアップがありません</div>';
+                return;
+            }
+            
+            backupList.innerHTML = backups.map(([id, backup]) => `
+                <div class="backup-item">
+                    <div class="backup-item-header">
+                        <div class="backup-name">${backup.name}</div>
+                        <div class="backup-type">${backup.type === 'auto' ? '自動' : '手動'}</div>
+                    </div>
+                    <div class="backup-info-detail">
+                        作成日時: ${backup.createdAt}
+                    </div>
+                    <div class="backup-actions-detail">
+                        <button class="restore-btn" onclick="restoreFromBackup('${id}')">復元</button>
+                        <button class="delete-backup-btn" onclick="deleteBackup('${id}')">削除</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function deleteBackup(backupId) {
+            const backup = backupData[backupId];
+            if (!backup) return;
+            
+            if (confirm(`「${backup.name}」を削除しますか？`)) {
+                delete backupData[backupId];
+                saveBackups();
+                updateBackupInfo();
+                displayBackups();
+                showNotification('バックアップを削除しました', 'warning');
+            }
+        }
+
+        function cleanupOldAutoBackups() {
+            const autoBackups = Object.entries(backupData)
+                .filter(([id, backup]) => backup.type === 'auto')
+                .sort((a, b) => b[1].timestamp - a[1].timestamp);
+            
+            if (autoBackups.length > 10) {
+                autoBackups.slice(10).forEach(([id]) => {
+                    delete backupData[id];
+                });
+            }
+        }
+
+        function updateBackupInfo() {
+            const autoBackupTime = document.getElementById('autoBackupTime');
+            const backupCount = document.getElementById('backupCount');
+            
+            autoBackupTime.textContent = lastAutoBackup || '未実行';
+            backupCount.textContent = Object.keys(backupData).length;
+        }
+
+        function saveBackups() {
+            // メモリ内に保持
+        }
+
+        function loadBackups() {
+            backupData = {};
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#00b894' : type === 'warning' ? '#fdcb6e' : '#ff6b6b'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                animation: slideInRight 0.3s ease;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
         }
 
         // Enterキーで単語を追加
@@ -1539,6 +2440,9 @@
                 addWord();
             }
         });
+
+        // アプリ初期化
+        initializeApp();
     </script>
 </body>
 </html>
